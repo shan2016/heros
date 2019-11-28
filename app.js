@@ -22,8 +22,13 @@ app.on('request', (req, res) => {
     let pathname = urlObj.pathname;
     // console.log('pathname:' + pathname)
     if (method == 'GET' && (pathname == '/' || pathname == '/index' || pathname == '/index.html')) {
-        let str = template(path.join(__dirname, './views/index.html'), {})
-        res.end(str);
+        fs.readFile(path.join(__dirname, './hero.json'), 'utf8', (err, data) => {
+            if (err) return console.log(err.message);
+            let herosArr = JSON.parse(data)
+            let str = template(path.join(__dirname, './views/index.html'), {data:herosArr})
+            res.end(str);
+        })
+
     } else if (method == 'GET' && (pathname == 'add' || pathname == '/add.html')) {
         let str = template(path.join(__dirname, './views/add.html'), {})
         res.end(str);
