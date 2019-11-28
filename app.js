@@ -5,6 +5,8 @@ const path = require('path');
 const url = require('url');
 const template = require('art-template');
 
+let bindRneder = require('./bindRneder.js')
+
 // 2：创建服务器对象
 let app = http.createServer()
 
@@ -15,6 +17,7 @@ app.listen(3006, () => {
 
 // 4:注册事件，并监听
 app.on('request', (req, res) => {
+    bindRneder(req, res);
     // console.log('req.url:' + req.url)
     let urlObj = url.parse(req.url, true);
     console.log('urlObj:' + urlObj)
@@ -25,21 +28,27 @@ app.on('request', (req, res) => {
         fs.readFile(path.join(__dirname, './hero.json'), 'utf8', (err, data) => {
             if (err) return console.log(err.message);
             let herosArr = JSON.parse(data)
-            let str = template(path.join(__dirname, './views/index.html'), {
+            // let str = template(path.join(__dirname, './views/index.html'), {
+            //     data: herosArr
+            // })
+            // res.end(str);
+            res.render('index', {
                 data: herosArr
             })
-            res.end(str);
         })
 
     } else if (method == 'GET' && (pathname == 'add' || pathname == '/add.html')) {
-        let str = template(path.join(__dirname, './views/add.html'), {})
-        res.end(str);
+        // let str = template(path.join(__dirname, './views/add.html'), {})
+        // res.end(str);
+        res.render('add', {})
     } else if (method == 'GET' && (pathname == 'edit' || pathname == '/edit.html')) {
-        let str = template(path.join(__dirname, './views/edit.html'), {})
-        res.end(str);
+        // let str = template(path.join(__dirname, './views/edit.html'), {})
+        // res.end(str);
+        res.render('edit', {})
     } else if (method == 'GET' && (pathname == 'info' || pathname == '/info.html')) {
-        let str = template(path.join(__dirname, './views/info.html'), {})
-        res.end(str);
+        // let str = template(path.join(__dirname, './views/info.html'), {})
+        // res.end(str);
+        res.render('info', {})
     } else if (method == 'GET' && pathname == '/node_modules/bootstrap/dist/css/bootstrap.css') {
         fs.readFile(path.join(__dirname, '/node_modules/bootstrap/dist/css/bootstrap.css'), (err, data) => {
             if (err) return console.log(err.message);
