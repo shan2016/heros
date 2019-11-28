@@ -1,0 +1,24 @@
+{
+  "name": "heros",
+  "version": "1.0.0",
+  "description": "英雄角色管理",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shan2016/heros.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shan2016/heros/issues"
+  },
+  "homepage": "https://github.com/shan2016/heros#readme",
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "bootstrap": "^4.4.0"
+  }
+}
