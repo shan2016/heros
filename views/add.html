@@ -34,11 +34,30 @@
         <label>英雄地址</label>
         <input type="text" name="address" class="form-control" placeholder="请输入英雄地址">
       </div>
-      <button type="submit" class="btn btn-success">点击保存</button>
+      <button type="submit" class="btn btn-success">添加英雄</button>
     </form>
   </div>
-  <script src="../node_modules/jquery/dist/jquery.js"></script>
+  <script src="../js/jquery-1.12.2.js"></script>
+  <script>
+    $(function () {
+      $('.btn-success').on('click', (e) => {
+        e.preventDefault();
+        $.ajax({
+          type: 'post',
+          url: '/addHeroInfo',
+          data: $('#form').serialize(),
+          dataType: 'json',
+          success: function (res) {
+            if (res.code == 200) {
+              location.href = '/'
+            } else {
+              location.reload();
+            }
+          }
+        })
+      })
+    })
+  </script>
 </body>
 
 </html>
-

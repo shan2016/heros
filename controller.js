@@ -2,6 +2,7 @@
 const fs = require('fs')
 const path = require('path')
 const url = require('url')
+const querystring = require('querystring')
 let bindRneder = require('./bindRneder.js');
 let modelData = require('./modelData.js')
 
@@ -38,11 +39,42 @@ module.exports = {
     },
     // 3.显示info页面
     showInfoPage(req, res) {
-        res.render('info', {})
+        // res.render('info', {})
+        let urlObj = url.parse(req.url, true)
+        let id = urlObj.query.id;
+        modelData.getOneHeroInfo(id, (err, data) => {
+            if (err) res.end('404');
+            res.render('info', data)
+        })
+
     },
     // 4.显示add页面
     showAddPage(req, res) {
         res.render('add', {})
+    },
+    //添加英雄数据
+    addHeroInfo(req, res) {
+        let str = '';
+        req.on('data', chunk => {
+            str += chunk;
+        })
+        req.on('end', () => {
+            let heroInfo = querystring.parse(str);
+            // console.log(heroInfo);
+            modelData.addHeroInfo(heroInfo, (result) => {
+                res.writeHeader(200, {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                })
+                if (result) return res.end(JSON.stringify({
+                    code: 200,
+                    msg: '添加成功'
+                }))
+                res.end(JSON.stringify({
+                    code: 201,
+                    msg: '添加失败'
+                }))
+            })
+        })
     },
     loadStaticSource(req, res) {
         fs.readFile(path.join(__dirname, res.pathname), (err, data) => {

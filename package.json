@@ -19,6 +19,7 @@
   "homepage": "https://github.com/shan2016/heros#readme",
   "dependencies": {
     "art-template": "^4.13.2",
-    "bootstrap": "^4.4.0"
+    "bootstrap": "^4.4.0",
+    "moment": "^2.24.0"
   }
 }

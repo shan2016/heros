@@ -10,7 +10,7 @@ let controller = require('./controller.js');
 // 2：路由分发设置
 function router(req, res) {
     let urlObj = url.parse(req.url, true);
-    console.log('urlObj:' + urlObj)
+    // console.log('urlObj:' + urlObj)
     let method = req.method;
     let pathname = urlObj.pathname;
     res.pathname = pathname;
@@ -24,6 +24,9 @@ function router(req, res) {
         controller.showEditPage(req, res);
     } else if (method == 'GET' && (pathname == '/info' || pathname == '/info.html')) {
         controller.showInfoPage(req, res)
+    } else if (method == 'POST' && pathname == '/addHeroInfo') {
+        controller.addHeroInfo(req, res)
+
     } else if (method == 'GET' && pathname.startsWith('/node_modules')) {
         controller.loadStaticSource(req, res)
     } else if (method == 'GET' && pathname == '/js/jquery-1.12.2.js') {
