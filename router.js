@@ -27,6 +27,13 @@ function router(req, res) {
     } else if (method == 'POST' && pathname == '/addHeroInfo') {
         controller.addHeroInfo(req, res)
 
+    } else if (method == 'GET' && pathname == '/deleteHeroInfo') {
+        controller.deleteHeroInfo(req, res)
+
+    } else if (method == 'POST' && pathname == '/editHeroInfo') {
+        console.log('开始编辑')
+        controller.editHeroInfo(req, res)
+
     } else if (method == 'GET' && pathname.startsWith('/node_modules')) {
         controller.loadStaticSource(req, res)
     } else if (method == 'GET' && pathname == '/js/jquery-1.12.2.js') {

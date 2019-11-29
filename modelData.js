@@ -44,5 +44,49 @@ module.exports = {
                 callback(true)
             })
         })
+    },
+    deleteHeroInfo(deleteId, callback) {
+        this.getAllHeroData((err, data) => {
+            if (err) return callback(false)
+            let herosArr = JSON.parse(data)
+            herosArr.some((item, index) => {
+                if (deleteId == item.id) {
+                    herosArr.splice(index, 1)
+                    return;
+                }
+            })
+            fs.writeFile(path.join(__dirname, './hero.json'), JSON.stringify(herosArr), err => {
+                if (err) return callback(false)
+                callback(true)
+            })
+        })
+    },
+    editHeroInfo(heroInfo, callback) {
+        let id = heroInfo.id;
+        let name = heroInfo.name;
+        let gender = heroInfo.gender;
+        let address = heroInfo.address;
+        // console.log('id:' + id);
+        this.getAllHeroData((err, data) => {
+            if (err) return callback(err)
+            let AllheroInfo = JSON.parse(data)
+            // console.log(AllheroInfo)
+            AllheroInfo.some(item => {
+                if (id == item.id) {
+                    // obj = item;
+                    item.name = name;
+                    // console.log(item.name)
+                    item.gender = gender;
+                    item.address = address;
+                    fs.writeFile(path.join(__dirname, './hero.json'), JSON.stringify(AllheroInfo), err => {
+                        if (err) return callback(false)
+                        callback(true)
+                    })
+                }
+
+            })
+            // callback(true);
+        })
+
     }
 }

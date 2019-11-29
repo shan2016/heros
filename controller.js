@@ -35,7 +35,16 @@ module.exports = {
 
     // 2.显示编辑页面
     showEditPage(req, res) {
-        res.render('edit', {})
+        // res.render('edit', {})
+        // res.render('info', {})
+        let urlObj = url.parse(req.url, true)
+        let id = urlObj.query.id;
+        // console.log(id)
+        modelData.getOneHeroInfo(id, (err, data) => {
+            if (err) res.end('404');
+            res.render('edit', data)
+            // console.log(data)
+        })
     },
     // 3.显示info页面
     showInfoPage(req, res) {
@@ -45,6 +54,40 @@ module.exports = {
         modelData.getOneHeroInfo(id, (err, data) => {
             if (err) res.end('404');
             res.render('info', data)
+        })
+
+    },
+    editHeroInfo(req, res) {
+        let str = '';
+        req.on('data', chunk => {
+            str += chunk;
+        })
+        // console.log('str:' + str)
+        // let urlObj = url.parse(req.url, true)
+        // let id = urlObj.query.id;
+        // console.log('id:' + id)
+        // let name = urlObj.query.name;
+        // console.log('name:' + name)
+        // let gender = urlObj.query.gender;
+        // console.log('gender:' + gender)
+        // let address = urlObj.query.address;
+        // console.log('address:' + address)
+        req.on('end', () => {
+            let heroInfo = querystring.parse(str);
+            // console.log(heroInfo);
+            modelData.editHeroInfo(heroInfo, (result) => {
+                res.writeHeader(200, {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                })
+                if (result) return res.end(JSON.stringify({
+                    code: 200,
+                    msg: '修改成功'
+                }))
+                res.end(JSON.stringify({
+                    code: 201,
+                    msg: '修改失败'
+                }))
+            })
         })
 
     },
@@ -60,7 +103,7 @@ module.exports = {
         })
         req.on('end', () => {
             let heroInfo = querystring.parse(str);
-            // console.log(heroInfo);
+            console.log(heroInfo);
             modelData.addHeroInfo(heroInfo, (result) => {
                 res.writeHeader(200, {
                     'Content-Type': 'text/plain;charset=utf-8'
@@ -74,6 +117,23 @@ module.exports = {
                     msg: '添加失败'
                 }))
             })
+        })
+    },
+    deleteHeroInfo(req, res) {
+        let urlObj = url.parse(req.url, true)
+        let deleteId = urlObj.query.id
+        modelData.deleteHeroInfo(deleteId, (result) => {
+            res.writeHeader(200, {
+                'Content-Type': 'text/plain;charset=utf-8'
+            })
+            if (result) return res.end(JSON.stringify({
+                code: 200,
+                msg: '删除成功'
+            }))
+            res.end(JSON.stringify({
+                code: 201,
+                msg: '删除失败'
+            }))
         })
     },
     loadStaticSource(req, res) {
