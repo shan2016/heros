@@ -33,7 +33,7 @@ function router(req, res) {
         })
     } else {
         let obj = {
-            code: 200,
+            code: 404,
             msg: '页面不存在哦'
         }
         res.end(JSON.stringify(obj));

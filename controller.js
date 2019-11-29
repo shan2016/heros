@@ -1,8 +1,9 @@
 // 1:引入模块
 const fs = require('fs')
 const path = require('path')
-
+const url = require('url')
 let bindRneder = require('./bindRneder.js');
+let modelData = require('./modelData.js')
 
 // 2：业务处理方法
 // let controller ={
@@ -20,16 +21,13 @@ module.exports = {
     // 1.显示index页面
     showIndexPage(req, res) {
         fs.readFile(path.join(__dirname, './views/index.html'), 'utf8', (err, data) => {
-            fs.readFile(path.join(__dirname, './hero.json'), 'utf8', (err, data) => {
-                if (err) return console.log(err.message);
+            modelData.getAllHeroData((err, data) => {
+                if (err) res.end('404')
                 let herosArr = JSON.parse(data)
-                // let str = template(path.join(__dirname, './views/index.html'), {
-                //     data: herosArr
-                // })
-                // res.end(str);
-                res.render('index', {
+                let obj = {
                     data: herosArr
-                })
+                }
+                res.render('index', obj)
             })
         })
     },
