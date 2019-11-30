@@ -62,16 +62,6 @@ module.exports = {
         req.on('data', chunk => {
             str += chunk;
         })
-        // console.log('str:' + str)
-        // let urlObj = url.parse(req.url, true)
-        // let id = urlObj.query.id;
-        // console.log('id:' + id)
-        // let name = urlObj.query.name;
-        // console.log('name:' + name)
-        // let gender = urlObj.query.gender;
-        // console.log('gender:' + gender)
-        // let address = urlObj.query.address;
-        // console.log('address:' + address)
         req.on('end', () => {
             let heroInfo = querystring.parse(str);
             // console.log(heroInfo);
@@ -79,6 +69,7 @@ module.exports = {
                 res.writeHeader(200, {
                     'Content-Type': 'text/plain;charset=utf-8'
                 })
+                // return中断操作
                 if (result) return res.end(JSON.stringify({
                     code: 200,
                     msg: '修改成功'

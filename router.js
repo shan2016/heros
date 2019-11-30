@@ -31,7 +31,7 @@ function router(req, res) {
         controller.deleteHeroInfo(req, res)
 
     } else if (method == 'POST' && pathname == '/editHeroInfo') {
-        console.log('开始编辑')
+        // console.log('开始编辑')
         controller.editHeroInfo(req, res)
 
     } else if (method == 'GET' && pathname.startsWith('/node_modules')) {

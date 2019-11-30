@@ -78,12 +78,13 @@ module.exports = {
                     // console.log(item.name)
                     item.gender = gender;
                     item.address = address;
-                    fs.writeFile(path.join(__dirname, './hero.json'), JSON.stringify(AllheroInfo), err => {
-                        if (err) return callback(false)
-                        callback(true)
-                    })
+                    
                 }
 
+            })
+            fs.writeFile(path.join(__dirname, './hero.json'), JSON.stringify(AllheroInfo), err => {
+                if (err) return callback(false)
+                callback(true)
             })
             // callback(true);
         })
