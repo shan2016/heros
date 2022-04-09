@@ -20,6 +20,6 @@
   "dependencies": {
     "art-template": "^4.13.2",
     "bootstrap": "^4.4.0",
-    "moment": "^2.24.0"
+    "moment": "^2.29.2"
   }
 }
